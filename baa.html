@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Seeking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f3f2ef;
+            color: #333;
+        }
+        header {
+            background-color: #D3B097;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 22px;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .hero {
+            margin: 50px 0;
+        }
+        .btn {
+            background-color: #D3B097;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .job-search {
+            margin: 20px auto;
+            width: 80%; /* Modified width */
+            max-width: 500px;
+        }
+        input, select {
+            padding: 10px;
+            width: 70%;
+            margin-bottom: 10px; /* Added margin */
+            box-sizing: border-box; /* Added box-sizing */
+            transition: transform 0.3s ease; /* Smooth transition for the zoom effect */
+        }
+        input:hover {
+            transform: scale(1.1); /* Scale up the input field on hover */
+        }
+        button {
+            padding: 10px;
+            background-color: #D3B097;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .job-listings {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .job {
+            background: #fff;
+            color: #333;
+            padding: 15px;
+            margin: 15px;
+            border-radius: 5px;
+            width: 350px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .login-box {
+            position: relative; /* Necessary for the absolute positioning of the pseudo-elements */
+            width: 400px; /* Adjusted width for better layout */
+            padding: 20px;
+            background: white;
+            color: #333;
+            margin: auto;
+            margin-top: 20px;
+            border-radius: 20px; /* Increased border-radius for a more rounded look */
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            overflow: hidden; /* Ensures child elements don't overflow */
+            animation: rotating 4s linear infinite; /* Added rotation animation */
+            filter: drop-shadow(0 15px 50px rgba(0, 0, 0, 0.5)); /* Enhanced shadow effect */
+        }
+
+        /* Keyframes for rotating animation */
+        @keyframes rotating {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Pseudo-element styles */
+        .login-box::before,
+        .login-box::after {
+            content: "";
+            position: absolute; /* Positioning for both pseudo-elements */
+            inset: 4px; /* Shorthand for top, right, bottom, left */
+            border-radius: 15px; /* Rounded corners */
+        }
+
+        .login-box::before {
+            background: #2d2d39; /* Background color for the before pseudo-element */
+            border: 8px solid #25252b; /* Border for the before pseudo-element */
+            z-index: -1; /* Ensure it is behind the box content */
+        }
+
+        .login-box::after {
+            background: rgba(255, 255, 255, 0.5); /* Light background for the after pseudo-element */
+            z-index: -2; /* Ensure it is behind the before pseudo-element */
+        }
+
+        footer {
+            margin-top: 20px;
+            background-color: #f1f1f1;
+            padding: 10px;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Initially Hide Sections */
+        #jobs, #login, #selectionProcess, #applicationForm {
+            display: none;
+        }
+
+        .selection-process {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            color: #333;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .selection-process h3 {
+            color: #D3B097;
+        }
+
+        .application-form {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            color: #333;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span>Job Seeking</span>
+        <nav>
+            <a onclick="showHome()">Home</a>
+            <a onclick="showJobs()">Jobs</a>
+            <a onclick="showLogin()">Login</a>
+        </nav>
+    </header>
+
+    <!-- Homepage Section -->
+    <section id="home" class="hero">
+        <h2>Connect with professionals and find your dream job!</h2>
+        <a class="btn" onclick="showJobs()">Join Now</a>
+    </section>
+
+    <!-- Selection Process Section -->  
+    <section id="selectionProcess" class="selection-process">
+        <h2>Job Listings</h2>
+        <div class="job-search">
+            <select id="job-select" onchange="showJobLocations(this)">
+                <option value="">Select a job</option>
+                <option value="Software Engineer">Software Engineer</option>
+                <option value="Data Scientist">Data Scientist</option>
+                <option value="Product Manager">Product Manager</option>
+                <option value="Web Developer">Web Developer</option>
+                <option value="Graphic Designer">Graphic Designer</option>
+                <option value="UX/UI Designer">UX/UI Designer</option>
+                <option value="SEO Specialist">SEO Specialist</option>
+                <option value="Marketing Strategist">Marketing Strategist</option>
+                <option value="Business Analyst">Business Analyst</option>
+                <option value="Full Stack Developer">Full Stack Developer</option>
+            </select>
+        </div>
+        <div class="job-listings" id="job-listings"></div>
+    </section>
+
+    <!-- Job Search Section -->
+    <section id="jobs"></section>
+
+    <!-- Login Section -->
+    <section id="login">
+        <h2>Login</h2>
+        <div class="login-box">
+            <input type="email" id="email" placeholder="Email"><br>
+            <input type="password" id="password" placeholder="Password"><br>
+            <button id="loginButton" onclick="loginUser ()">Login</button>
+            <p id="loginMessage" style="color: red;"></p>
+        </div>
+    </section>
+
+    <!-- Application Form Section -->
+    <section id="applicationForm" class="application-form">
+        <h2>Application Form</h2>
+        <input type="text" id="fullName" placeholder="Full Name"><br>
+        <input type="number" id="age" placeholder="Age"><br>
+        <input type="number" id="yearsOfExperience" placeholder="Years of Experience"><br>
+        <input type="date" id="dateOfExperience"><br>
+        <button onclick="submitApplication()">Submit Application</button>
+        <p id="applicationMessage" style="color: red;"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Job Seeking</p>
+    </footer>
+    
+    <script>
+        const jobCompanies = {
+            "Software Engineer": [
+                { company: "TechCorp", location: "New York, USA" },
+                { company: "Innovative Solutions", location: "San Francisco, USA" },
+                { company: "CodeMasters", location: "Austin, USA" }
+            ],
+            "Data Scientist": [
+                { company: "DataX", location: "San Francisco, USA" },
+                { company: "AnalyzePro", location: "Boston, USA" },
+                { company: "DeepMind", location: "Seattle, USA" }
+            ],
+            "Product Manager": [
+                { company: "Productify", location: "Los Angeles, USA" },
+                { company: "TechEdge", location: "New York, USA" },
+                { company: "InnovateInc", location: "Chicago, USA" }
+            ],
+            "Web Developer": [
+                { company: "WebWorks", location: "Chicago, USA" },
+                { company: "CodeCraft", location: "San Francisco, USA" },
+                { company: "TechNest", location: "Miami, USA" }
+            ],
+            "Graphic Designer": [
+                { company: "CreativeVision", location: "Los Angeles, USA" },
+                { company: "PixelCrafters", location: "New York, USA" },
+                { company: "DesignWave", location: "Chicago, USA" }
+            ],
+            "UX/UI Designer": [
+                { company: "DesignHub", location: "San Francisco, USA" },
+                { company: "UXStudio", location: "Seattle, USA" },
+                { company: "UIXperts", location: "New York, USA" }
+            ],
+            "SEO Specialist": [
+                { company: "SEOPro", location: "Chicago, USA" },
+                { company: "BoostSearch", location: "Los Angeles, USA" },
+                { company: "RankX", location: "Miami, USA" }
+            ],
+            "Marketing Strategist": [
+                { company: "Brandify", location: "New York, USA" },
+                { company: "MarketSpark", location: "Austin, USA" },
+                { company: "AdMasters", location: "San Francisco, USA" }
+            ],
+            "Business Analyst": [
+                { company: "DataInsights", location: "Boston, USA" },
+                { company: "VisionaryConsult", location: "Chicago, USA" },
+                { company: "MarketScope", location: "Seattle, USA" }
+            ],
+            "Full Stack Developer": [
+                { company: "TechBuild", location: "Los Angeles, USA" },
+                { company: "StackLab", location: "San Francisco, USA" },
+                { company: "CodeFusion", location: "New York, USA" }
+            ]
+        };
+
+        function hideAllSections() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('jobs').style.display = 'none';
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('selectionProcess').style.display = 'none';
+            document.getElementById('applicationForm').style.display = 'none';
+        }
+
+        function showHome() {
+            hideAllSections();
+            document.getElementById('home').style.display = 'block';
+        }
+
+        function showJobs() {
+            hideAllSections();
+            document.getElementById('selectionProcess').style.display = 'block';
+            showRandomJobs();
+        }
+
+        function showRandomJobs() {
+            const randomJobs = [
+                { title: "Software Engineer", company: "TechCorp", location: "New York, USA" },
+                { title: "Data Scientist", company: "DataX", location: "San Francisco, USA" },
+                { title: "Product Manager", company: "Productify", location: "Los Angeles, USA" },
+                { title: "Web Developer", company: "WebWorks", location: "Chicago, USA" },
+                { title: "Graphic Designer", company: "CreativeVision", location: "Los Angeles, USA" },
+                { title: "UX/UI Designer", company: "DesignHub", location: "San Francisco, USA" },
+                { title: "SEO Specialist", company: "SEOPro", location: "Chicago, USA" },
+                { title: "Marketing Strategist", company: "Brandify", location: "New York, USA" },
+                { title: "Business Analyst", company: "DataInsights", location: "Boston, USA" },
+                { title: "Full Stack Developer", company: "TechBuild", location: "Los Angeles, USA" }
+            ];
+
+            const shuffledJobs = randomJobs.sort(() => 0.5 - Math.random()).slice(0, 5);
+            const jobListElement = document.getElementById('job-listings');
+            jobListElement.innerHTML = ''; // Clear previous listings
+
+            shuffledJobs.forEach(job => {
+                const jobElement = document.createElement('div');
+                jobElement.classList.add('job');
+                jobElement.innerHTML = `
+                    <h3>${job.title}</h3>
+                    <p>Company: ${job.company}</p>
+                    <p>Location: ${job.location}</p>
+                    <button onclick="applyNow('${job.title}')">Apply Now</button>
+                `;
+                jobListElement.appendChild(jobElement);
+            });
+        }
+
+        function showJobLocations(select) {
+            const selectedJob = select.value;
+            const jobListings = jobCompanies[selectedJob] || [];
+            const jobListElement = document.getElementById('job-listings');
+            jobListElement.innerHTML = ''; // Clear previous listings
+
+            if (jobListings.length > 0) {
+                jobListings.forEach(job => {
+                    const jobElement = document.createElement('div');
+                    jobElement.classList.add('job');
+                    jobElement.innerHTML = `
+                        <h3>${selectedJob}</h3>
+                        <p>Company: ${job.company}</p>
+                        <p>Location: ${job.location}</p>
+                        <button onclick="applyNow('${selectedJob}')">Apply Now</button>
+                    `;
+                    jobListElement.appendChild(jobElement);
+                });
+            } else {
+                jobListElement.innerHTML = "<p>No listings available for this job.</p>";
+            }
+        }
+
+        function applyNow(jobTitle) {
+            hideAllSections();
+            document.getElementById('applicationForm').style.display = 'block';
+            document.getElementById('applicationMessage').innerText = `Applying for ${jobTitle}`;
+        }
+
+        function submitApplication() {
+            const fullName = document.getElementById('fullName').value;
+            const age = document.getElementById('age').value;
+            const yearsOfExperience = document.getElementById('yearsOfExperience').value;
+            const dateOfExperience = document.getElementById('dateOfExperience').value;
+            const applicationMessage = document.getElementById('applicationMessage');
+
+            if (fullName && age && yearsOfExperience && dateOfExperience) {
+                applicationMessage.style.color = "green";
+                applicationMessage.innerText = `Application submitted successfully! Name: ${fullName}, Age: ${age}, Years of Experience: ${yearsOfExperience}, Date of Experience: ${dateOfExperience}`;
+            } else {
+                applicationMessage.style.color = "red";
+                applicationMessage.innerText = "Please fill in all fields.";
+            }
+        }
+
+        function loginUser () {
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            let loginMessage = document.getElementById('loginMessage');
+            const loginButton = document.getElementById('loginButton');
+
+            const validCredentials = [
+                { email: "user@example.com", password: "password" },
+                { email: "test@example.com", password: "test123" },
+                { email: "admin@example.com", password: "admin123" }
+            ];
+
+            const isValid = validCredentials.some(cred => cred.email === email && cred.password === password);
+
+            if (isValid) {
+                loginMessage.style.color = "green";
+                loginMessage.innerText = "Login successful!";
+                loginButton.innerText = `Login as ${email}`;
+            } else {
+                loginMessage.style.color = "red";
+                loginMessage.innerText = "Invalid credentials!";
+                loginButton.innerText = "Login"; // Reset button text on failure
+            }
+        }
+
+        function showLogin() {
+            hideAllSections();
+            document.getElementById('login').style.display = 'block'; // Show the login section
+        }
+
+        // Initial display
+        showHome();
+    </script>
+</body>
+</html>
